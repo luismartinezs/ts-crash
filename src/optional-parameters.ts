@@ -1,5 +1,5 @@
 {
-  // n is actually of types number or undefined
+  // n is actually of types number or undefined, because it is optional
   function f1(n?: number) {
     if (n != undefined) {
       console.log(n.toFixed());
@@ -35,4 +35,11 @@
   // but this errors:
   myForEach([1, 2, 3], (a, i) => console.log(i.toFixed()));
   // because i might be undefined, according to the function type definition, and we can't call method toFixed of undefined
+
+  // x is inferred of type number because of the default value
+  function f3(x = 10) {
+    return x.toFixed();
+  }
+
+  let res = f3();
 }
