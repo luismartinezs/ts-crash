@@ -1,17 +1,19 @@
-{
-  type Arrayish = {
-    [n: number]: unknown;
-  };
+type ExtractPII<T> = {
+  [P in keyof T]: T[P] extends { pii: true } ? true : false;
+};
 
-  type A = keyof Arrayish;
+type DBFields = {
+  id: { format: "incrementing" };
+  name: { pii: true };
+};
 
-  type MapToBoolean<T extends { label: string }> = {
-    [E in T as E["label"]]: E extends { name: string } ? true : false;
-  };
+type T1 = ExtractPII<DBFields>;
 
-  type T1 = MapToBoolean<
-    | { label: "myLabel" }
-    | { label: "otherLabel" }
-    | { name: "Elmer"; label: "user" }
-  >;
+interface MyFunc {
+  new (s: string): Date;
+  (n?: number): Date;
 }
+
+type TypeOrArray<T> = T[] | T;
+
+export {};
